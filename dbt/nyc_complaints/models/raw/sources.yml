@@ -1,0 +1,52 @@
+version: 2
+
+sources:
+  - name: raw
+    tables:
+      - name: nyc_complaints
+        description: >
+            This source table is actually a set of files in external storage.
+                                        
+        external:
+          location: gs://nyc-complaints-median-income/silver/complaints/*.parquet        # required: S3 file path, GCS file path, Snowflake stage, Synapse data source
+          
+          options:
+            format: parquet          # database-specific properties of external table
+            hive_partition_uri_prefix: gs://nyc-complaints-median-income/silver/complaints/ # CRITICAL
+          
+          partitions:       # optional
+            - name: ingest_date
+              data_type: date
+              # ...           # database-specific properties
+
+        # Specify ALL column names + datatypes.
+        # Column order must match for CSVs, column names must match for other formats.
+        # Some databases support schema inference.
+
+        # columns:
+        #   - name: app_id
+        #     data_type: varchar(255)
+        #     description: "Application ID"
+        #   - name: platform
+        #     data_type: varchar(255)
+        #     description: "Platform"
+          # ...
+
+        # # Use `meta` to pass custom column properties (e.g. alias, expression)
+        # columns:
+        #   - name: raw_timestamp
+        #     data_type: timestamp
+        #     config:
+        #       meta:
+        #         alias: event_timestamp       # rename the column in the external table
+        #         expression: TO_TIMESTAMP(...) # custom SQL expression instead of default value extraction
+
+      - name: median_income
+        description: >
+            This source table is for median income.
+                                        
+        external:
+          location: gs://nyc-complaints-median-income/silver/median_income/*.parquet        # required: S3 file path, GCS file path, Snowflake stage, Synapse data source
+          
+          options:
+            format: parquet            # database-specific properties of external table

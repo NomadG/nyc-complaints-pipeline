@@ -1,0 +1,106 @@
+version: 2
+
+models:
+  - name: stg_complaints
+    description: "Staged NYC 311 complaints data, incrementally loaded from raw source. One row per unique complaint."
+    columns:
+      - name: unique_key
+        description: "Primary key for a complaint record."
+        data_tests:
+          - unique
+          - not_null
+
+      - name: status
+        description: "Current status of the complaint (lowercased and trimmed)."
+        data_tests:
+          - accepted_values:
+              values: ['open', 'closed', 'pending', 'in progress', 'assigned', 'started', 'unspecified']
+
+      - name: created_date
+        description: "Timestamp when the complaint was created. Used as the partition key."
+
+      - name: closed_date
+        description: "Timestamp when the complaint was closed. Null if still open."
+
+      - name: due_date
+        description: "SLA due date for the complaint."
+
+      - name: resolution_action_updated_date
+        description: "Timestamp of the most recent resolution action update."
+
+      - name: SLA_days
+        description: "Number of days allocated by SLA for resolution."
+
+      - name: resolution_time_days
+        description: "Actual number of days taken to resolve the complaint."
+
+      - name: agency
+        description: "Short code of the agency responsible for the complaint."
+
+      - name: agency_name
+        description: "Full name of the agency responsible for the complaint."
+
+      - name: borough
+        description: "NYC borough where the complaint was filed."
+
+      - name: city
+        description: "City name (uppercased) associated with the complaint address."
+
+      - name: address_type
+        description: "Type of address provided for the complaint location."
+
+      - name: bbl
+        description: "Borough-Block-Lot identifier for the property."
+
+      - name: community_board
+        description: "NYC community board number for the complaint location."
+
+      - name: complaint_type
+        description: "Category of the complaint."
+
+      - name: council_district
+        description: "NYC council district for the complaint location."
+
+      - name: descriptor
+        description: "Primary descriptor providing more detail about the complaint type."
+
+      - name: descriptor_2
+        description: "Secondary descriptor for additional complaint detail."
+
+      - name: incident_zip
+        description: "ZIP code of the complaint location."
+        # data_tests:
+        #   - relationships:
+        #       arguments:
+        #         to: ref('stg_median_income')
+        #         field: zip_code
+
+      - name: location_type
+        description: "Type of location where the complaint was filed."
+
+      - name: police_precinct
+        description: "NYPD precinct number for the complaint location."
+
+      - name: created_at
+        description: "Timestamp when the record was first created in the source system."
+
+      - name: updated_at
+        description: "Timestamp of the most recent update to the record in the source system."
+
+      - name: ingest_date
+        description: "Date the record was ingested into the data platform. Used for incremental loading."
+
+      - name: ingest_timestamp
+        description: "Full timestamp of when the record was ingested."
+
+  # - name: stg_median_income
+  #   description: "Staged median income data by ZIP code."
+  #   columns:
+  #     - name: zip_code
+  #       description: "ZIP code. Primary key for this table."
+  #       data_tests:
+  #         - unique
+  #         - not_null
+
+  #     - name: median_income
+  #       description: "Median household income for the ZIP code."

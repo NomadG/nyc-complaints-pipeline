@@ -1,0 +1,52 @@
+# ── Credentials & secrets ─────────────────────────────────────────────────────
+credentials/
+**/*.json
+airflow/.env
+ingestion/.env
+
+# ── Terraform ─────────────────────────────────────────────────────────────────
+# state files can contain plaintext secrets; tfvars have real project IDs
+terraform/terraform.tfvars
+terraform/terraform.tfstate
+terraform/terraform.tfstate.backup
+terraform/.terraform/
+terraform-trial/
+
+# ── Airflow ───────────────────────────────────────────────────────────────────
+airflow/logs/
+airflow/config/airflow.cfg
+airflow/.venv/
+airflow/.env
+
+# ── Spark ─────────────────────────────────────────────────────────────────────
+spark-tranformation/*.jar
+spark-tranformation/spark-warehouse/
+spark-tranformation/Explore.ipynb
+spark-tranformation/transforms.ipynb
+spark-tranformation/transforms-local.py
+spark-tranformation/temp.py
+
+# ── dbt ───────────────────────────────────────────────────────────────────────
+dbt/logs/
+
+# ── Ingestion ─────────────────────────────────────────────────────────────────
+ingestion/data.json
+ingestion/median_income.json
+ingestion/*.ipynb
+
+# ── Python ────────────────────────────────────────────────────────────────────
+**/__pycache__/
+*.py[oc]
+**/.venv/
+**/.python-version
+
+# ── Jupyter ───────────────────────────────────────────────────────────────────
+**/.ipynb_checkpoints/
+
+# ── Windows metadata ──────────────────────────────────────────────────────────
+*.Zone.Identifier
+*:Zone.Identifier
+
+# ── dbt user config & starter templates ───────────────────────────────────────
+**/.user.yml
+dbt/nyc_complaints/models/example/
