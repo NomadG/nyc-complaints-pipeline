@@ -66,18 +66,19 @@ def spark_transform_dag():
 
     def create_spark_task(task_id, task_arg):
         return DataprocSubmitJobOperator(
-            task_id=task_id,
-            job={
-                "reference": {"project_id": PROJECT_ID},
-                "placement": {"cluster_name": CLUSTER_NAME},
-                "pyspark_job": {
-                    "main_python_file_uri": SCRIPT_URI,
-                    "args": ["--task", task_arg],
-                },
+        task_id=task_id,
+        job={
+            "reference": {"project_id": PROJECT_ID},
+            "placement": {"cluster_name": CLUSTER_NAME},
+            "pyspark_job": {
+                "main_python_file_uri": SCRIPT_URI,
+                "args": ["--task", task_arg, "--bucket", BUCKET],
+                "properties": {},
             },
-            region=REGION,
-            project_id=PROJECT_ID,
-        )
+        },
+        region=REGION,
+        project_id=PROJECT_ID,
+    )
 
     spark_complaints = create_spark_task('spark_transform_complaints', 'complaints')
     spark_income = create_spark_task('spark_transform_median_income', 'median_income')

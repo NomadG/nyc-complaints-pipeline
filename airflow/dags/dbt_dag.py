@@ -33,6 +33,7 @@ def dbt_dag():
             environment={
                 'GOOGLE_APPLICATION_CREDENTIALS': '/app/creds/g_creds.json',
                 'GCP_PROJECT_ID': os.environ['DATAPROC_PROJECT_ID'],
+                'GCS_BUCKET_NAME': os.environ['GCS_BUCKET_NAME'],
             },
             mounts=[
                 Mount(source=os.environ['CREDENTIALS_HOST_DIR'], target='/app/creds', type='bind')

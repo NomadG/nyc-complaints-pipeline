@@ -51,6 +51,6 @@ from {{ source('raw', 'nyc_complaints') }}
     where ingest_date >= (select max(ingest_date) from {{ this }})
 
 {% endif %}
-    AND created_date >= '2025-01-01' -- Filter out records before January 1, 2025
+
 
 QUALIFY row_number() over (partition by unique_key order by _updated_at desc) = 1

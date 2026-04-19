@@ -14,8 +14,8 @@ load_dotenv() #loads .env file when running locally
 APP_TOKEN       = os.environ["SOCRATA_APP_TOKEN"]          # required, no default
 BUCKET_NAME     = os.environ["GCS_BUCKET_NAME"]            # required, no default
 service_account_json = os.environ["SERVICE_ACCOUNT_JSON"]  # required, no default
-DEFAULT_START   = os.environ.get("DEFAULT_START", "2026-04-09T01:35:59.943Z")
-PAGE_SIZE       = int(os.environ.get("PAGE_SIZE", "10000"))
+DEFAULT_START   = os.environ.get("DEFAULT_START", "2025-01-01T00:00:00.000Z")
+PAGE_SIZE       = int(os.environ.get("PAGE_SIZE", "50000"))
 
 METADATA_PREFIX = "metadata/"
 DATA_PREFIX = "bronze/complaints/"
@@ -74,7 +74,7 @@ def complaints(service_account_json):
             response = session.get(
                 "https://data.cityofnewyork.us/resource/erm2-nwe9.json?"
                 "$select=*,:updated_at,:created_at,:version,:id&"
-                f"$where=:updated_at>'{last_updated_at}'&"
+                f"$where=:updated_at>'{last_updated_at}' AND created_date>='2025-01-01T00:00:00'&"
                 f"$order=:updated_at ASC, unique_key ASC&$limit={PAGE_SIZE}&"
                 f"$offset={offset}&$$app_token={APP_TOKEN}"
             )

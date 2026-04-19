@@ -3,7 +3,7 @@ from pyspark.sql import functions as F
 from pyspark.sql import types
 import os
 
-BUCKET_NAME = os.environ.get("GCS_BUCKET_NAME", "nyc-complaints-median-income")
+BUCKET_NAME = None  # set via --bucket arg in __main__
 
 
 # creating spark context
@@ -144,7 +144,10 @@ if __name__ == "__main__":
     import argparse
     parser = argparse.ArgumentParser()
     parser.add_argument('--task', choices=['complaints', 'median_income'], required=True)
+    parser.add_argument('--bucket', required=True)
     args = parser.parse_args()
+
+    BUCKET_NAME = args.bucket
 
     if args.task == 'complaints':
         transform_complaints()

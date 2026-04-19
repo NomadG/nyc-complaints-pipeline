@@ -8,11 +8,11 @@ sources:
             This source table is actually a set of files in external storage.
                                         
         external:
-          location: gs://nyc-complaints-median-income/silver/complaints/*.parquet        # required: S3 file path, GCS file path, Snowflake stage, Synapse data source
-          
+          location: "gs://{{ env_var('GCS_BUCKET_NAME') }}/silver/complaints/*.parquet"
+
           options:
             format: parquet          # database-specific properties of external table
-            hive_partition_uri_prefix: gs://nyc-complaints-median-income/silver/complaints/ # CRITICAL
+            hive_partition_uri_prefix: "gs://{{ env_var('GCS_BUCKET_NAME') }}/silver/complaints/"
           
           partitions:       # optional
             - name: ingest_date
@@ -46,7 +46,7 @@ sources:
             This source table is for median income.
                                         
         external:
-          location: gs://nyc-complaints-median-income/silver/median_income/*.parquet        # required: S3 file path, GCS file path, Snowflake stage, Synapse data source
+          location: "gs://{{ env_var('GCS_BUCKET_NAME') }}/silver/median_income/*.parquet"
           
           options:
             format: parquet            # database-specific properties of external table
