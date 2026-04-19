@@ -35,8 +35,8 @@ def ingestion_dag():
                 'SERVICE_ACCOUNT_JSON': '/app/creds/g_creds.json',
                 'GCS_BUCKET_NAME': os.environ['GCS_BUCKET_NAME'],
                 'SOCRATA_APP_TOKEN': os.environ['SOCRATA_APP_TOKEN'],
-                'DEFAULT_START': os.environ.get('DEFAULT_START', '2026-04-09T01:35:59.943Z'),
-                'PAGE_SIZE': os.environ.get('PAGE_SIZE', '10000'),
+                'DEFAULT_START': os.environ.get('DEFAULT_START', '2025-01-01T00:00:00.000Z'),
+                'PAGE_SIZE': os.environ.get('PAGE_SIZE', '50000'),
             },
             mounts=[
                 Mount(source=os.environ['CREDENTIALS_HOST_DIR'], target='/app/creds', type='bind')

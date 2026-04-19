@@ -55,11 +55,16 @@ def dbt_dag():
         'test --select staging'
     )
 
+    run_snapshot = create_dbt_task(
+        'run_snapshot',
+        'snapshot'
+    )
+
     run_mart = create_dbt_task(
         'run_mart',
         'run --select mart'
     )
 
-    stage_external_sources >> run_staging >> test_staging >> run_mart
+    stage_external_sources >> run_staging >> test_staging >> run_snapshot >> run_mart
 
 dbt_dag()
