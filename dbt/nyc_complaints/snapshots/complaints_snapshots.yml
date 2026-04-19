@@ -3,7 +3,7 @@ snapshots:
     relation: ref('stg_complaints')
     config:
       schema: snapshots
-      database: premium-buckeye-484913-s0
+      database: "{{ env_var('GCP_PROJECT_ID') }}"
       unique_key: unique_key
       strategy: timestamp
       updated_at: updated_at
